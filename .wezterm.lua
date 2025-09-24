@@ -10,7 +10,7 @@ if wezterm.config_builder then
 end
 
 -- Font configuration
-config.font = wezterm.font('Fira Code', { weight = 'Regular' })
+config.font = wezterm.font('FiraCode Nerd Font Mono', { weight = 'Regular' })
 config.font_size = 14.0
 
 -- Enable font ligatures (Fira Code's main feature)
@@ -50,6 +50,7 @@ local keys = {
     { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
     { key = '0', mods = 'CTRL', action = act.ResetFontSize },
     { key = 'R', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
+    { key = 'p', mods = 'LEADER', action = act.PasteFrom 'Clipboard' },
 }
 
 config.keys = keys
