@@ -53,6 +53,20 @@ local keys = {
     { key = 'p', mods = 'LEADER', action = act.PasteFrom 'Clipboard' },
 }
 
+for i = 1, 8 do
+  -- CTRL+ALT + number to activate that tab
+  table.insert(keys, {
+    key = tostring(i),
+    mods = 'CMD',
+    action = act.ActivateTab(i - 1),
+  })
+  -- F1 through F8 to activate that tab
+  table.insert(keys, {
+    key = 'F' .. tostring(i),
+    action = act.ActivateTab(i - 1),
+  })
+end
+
 config.keys = keys
 
 
