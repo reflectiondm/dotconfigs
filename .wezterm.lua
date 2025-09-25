@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
+local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
 
 local config = {}
 
@@ -9,6 +10,79 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+bar.apply_to_config(config, {
+  position = "bottom",
+  max_width = 32,
+  padding = {
+    left = 1,
+    right = 1,
+    tabs = {
+      left = 0,
+      right = 2,
+    },
+  },
+  separator = {
+    space = 1,
+    left_icon = wezterm.nerdfonts.fa_long_arrow_right,
+    right_icon = wezterm.nerdfonts.fa_long_arrow_left,
+    field_icon = wezterm.nerdfonts.indent_line,
+  },
+  modules = {
+    tabs = {
+      active_tab_fg = 4,
+      inactive_tab_fg = 6,
+      new_tab_fg = 2,
+    },
+    workspace = {
+      enabled = true,
+      icon = wezterm.nerdfonts.cod_window,
+      color = 8,
+    },
+    leader = {
+      enabled = true,
+      icon = wezterm.nerdfonts.oct_rocket,
+      color = 2,
+    },
+    zoom = {
+      enabled = false,
+      icon = wezterm.nerdfonts.md_fullscreen,
+      color = 4,
+    },
+    pane = {
+      enabled = true,
+      icon = wezterm.nerdfonts.cod_multiple_windows,
+      color = 7,
+    },
+    username = {
+      enabled = true,
+      icon = wezterm.nerdfonts.fa_user,
+      color = 6,
+    },
+    hostname = {
+      enabled = true,
+      icon = wezterm.nerdfonts.cod_server,
+      color = 8,
+    },
+    clock = {
+      enabled = true,
+      icon = wezterm.nerdfonts.md_calendar_clock,
+      format = "%H:%M",
+      color = 5,
+    },
+    cwd = {
+      enabled = true,
+      icon = wezterm.nerdfonts.oct_file_directory,
+      color = 7,
+    },
+    spotify = {
+      enabled = false,
+      icon = wezterm.nerdfonts.fa_spotify,
+      color = 3,
+      max_width = 64,
+      throttle = 15,
+    },
+  },
+})
 -- Font configuration
 config.font = wezterm.font('FiraCode Nerd Font Mono', { weight = 'Regular' })
 config.font_size = 14.0
@@ -17,10 +91,92 @@ config.font_size = 14.0
 config.harfbuzz_features = { 'calt=1', 'clig=1', 'liga=1' }
 
 -- Optional: Color scheme
-config.color_scheme = 'Tomorrow Night'
+-- config.color_scheme = 'Tomorrow Night'
+
+-- config.colors = {
+-- 	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+-- }
 
 config.colors = {
-	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+  -- Basic colors
+  foreground = '#abb2bf',
+  background = '#282c34',
+  
+  -- Cursor colors
+  cursor_bg = '#528bff',
+  cursor_fg = '#282c34',
+  cursor_border = '#528bff',
+  
+  -- Selection colors
+  selection_fg = '#abb2bf',
+  selection_bg = '#3e4451',
+  
+  -- Scrollbar
+  scrollbar_thumb = '#5c6370',
+  
+  -- Split borders
+  split = '#181a1f',
+  
+  -- ANSI colors (normal)
+  ansi = {
+    '#282c34', -- black
+    '#e06c75', -- red
+    '#98c379', -- green
+    '#e5c07b', -- yellow
+    '#61afef', -- blue
+    '#c678dd', -- magenta
+    '#56b6c2', -- cyan
+    '#abb2bf', -- white
+  },
+  
+  -- ANSI colors (bright)
+  brights = {
+    '#5c6370', -- bright black (gray)
+    '#e06c75', -- bright red
+    '#98c379', -- bright green
+    '#e5c07b', -- bright yellow
+    '#61afef', -- bright blue
+    '#c678dd', -- bright magenta
+    '#56b6c2', -- bright cyan
+    '#ffffff', -- bright white
+  },
+  
+  -- Tab bar colors
+  tab_bar = {
+    background = '#21252b',
+    active_tab = {
+      bg_color = '#282c34',
+      fg_color = '#abb2bf',
+      intensity = 'Normal',
+      underline = 'None',
+      italic = false,
+      strikethrough = false,
+    },
+    inactive_tab = {
+      bg_color = '#21252b',
+      fg_color = '#5c6370',
+      intensity = 'Normal',
+      underline = 'None',
+      italic = false,
+      strikethrough = false,
+    },
+    inactive_tab_hover = {
+      bg_color = '#2c313c',
+      fg_color = '#abb2bf',
+      intensity = 'Normal',
+      underline = 'None',
+      italic = false,
+      strikethrough = false,
+    },
+    new_tab = {
+      bg_color = '#21252b',
+      fg_color = '#5c6370',
+    },
+    new_tab_hover = {
+      bg_color = '#2c313c',
+      fg_color = '#abb2bf',
+    },
+  },
 }
 
 -- Optional: Window settings
@@ -28,7 +184,7 @@ config.window_background_opacity = 1.0
 config.window_decorations = "RESIZE"
 
 -- Optional: Tab bar settings
-config.hide_tab_bar_if_only_one_tab = true
+-- config.hide_tab_bar_if_only_one_tab = true
 
 config.scrollback_lines = 5000
 
@@ -38,6 +194,8 @@ config.leader = { key = 'b', mods = 'CMD', timeout_milliseconds = 2000 }
 local keys = {
     { key = 'l', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
     { key = 'h', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
+    { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left' },
+    { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right' },
     { key = 'j', mods = 'CMD', action = act.ActivatePaneDirection 'Down' },
     { key = 'k', mods = 'CMD', action = act.ActivatePaneDirection 'Up' },
     { key = 'f', mods = 'CMD', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
