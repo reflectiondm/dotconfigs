@@ -1,8 +1,9 @@
 # Hand changed stuff
 # ALIASES
-alias gilamas="git co master; git fetch --prune; git pull"
+alias gs="git status"
+alias gp="git pull"
+alias gfp="git fetch --prune"
 alias giclrbr='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
-alias bash-reload="source ~/.bashrc"
 alias dcu="docker-compose up"
 alias prv="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias opn="code \$(prv)"
@@ -12,7 +13,6 @@ alias gbrd="git branch -D \$(git branch | fzf)"
 alias grh="git reset --hard"
 
 alias -s {js,ts,html}=code
-alias lvim="/Users/andreizubov/.local/bin/lvim"
 alias git='LANG=en_GB git'
 alias lg='lazygit'
 # Functions
@@ -23,6 +23,8 @@ function remove_from_history () {
 }
 
 alias rfh=remove_from_history
+
+alias la="eza --group-directories-first -a --icons --hyperlink"
 
 tw() {
   yarn jest $1 --watch
