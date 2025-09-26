@@ -1,8 +1,5 @@
 # Hand changed stuff
 # ALIASES
-alias gs="git status"
-alias gp="git pull"
-alias gfp="git fetch --prune"
 alias giclrbr='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
 alias dcu="docker-compose up"
 alias prv="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
@@ -10,10 +7,8 @@ alias opn="code \$(prv)"
 alias gcob="git checkout \$(git branch -l | fzf | sed 's/\?*.//')"
 alias gcor="git checkout \$(git branch -r | grep origin | grep -v HEAD | fzf | sed 's/origin\///')"
 alias gbrd="git branch -D \$(git branch | fzf)"
-alias grh="git reset --hard"
 
 alias -s {js,ts,html}=code
-alias git='LANG=en_GB git'
 alias lg='lazygit'
 # Functions
 function remove_from_history () {
