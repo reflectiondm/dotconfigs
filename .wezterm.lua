@@ -190,32 +190,51 @@ config.scrollback_lines = 5000
 
 
 config.disable_default_key_bindings = true
-config.leader = { key = 'b', mods = 'CMD', timeout_milliseconds = 2000 }
+
+-- Detect platform and set modifier key
+local mod = 'CMD'
+if wezterm.target_triple:find("windows") then
+  mod = 'CTRL'
+end
+
+config.leader = { key = 'b', mods = mod, timeout_milliseconds = 2000 }
 local keys = {
     { key = 'l', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
     { key = 'h', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
-    { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left' },
-    { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right' },
-    { key = 'j', mods = 'CMD', action = act.ActivatePaneDirection 'Down' },
-    { key = 'k', mods = 'CMD', action = act.ActivatePaneDirection 'Up' },
-    { key = 'f', mods = 'CMD', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-    { key = 'd', mods = 'CMD', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-    { key = 't', mods = 'CMD', action = act.SpawnTab 'CurrentPaneDomain' },
-    { key = 'w', mods = 'CMD', action = act.CloseCurrentTab{ confirm = false } },
-    { key = 'x', mods = 'CMD', action = act.CloseCurrentPane{ confirm = false } },
-    { key = 'Enter', mods = 'CMD', action = act.ActivateCopyMode },
+    { key = 'h', mods = mod, action = act.ActivatePaneDirection 'Left' },
+    { key = 'l', mods = mod, action = act.ActivatePaneDirection 'Right' },
+    { key = 'j', mods = mod, action = act.ActivatePaneDirection 'Down' },
+    { key = 'k', mods = mod, action = act.ActivatePaneDirection 'Up' },
+    { key = 'f', mods = mod, action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+    { key = 'd', mods = mod, action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    { key = 't', mods = mod, action = act.SpawnTab 'CurrentPaneDomain' },
+    { key = 'w', mods = mod, action = act.CloseCurrentTab{ confirm = false } },
+    { key = 'x', mods = mod, action = act.CloseCurrentPane{ confirm = false } },
+    { key = 'Enter', mods = mod, action = act.ActivateCopyMode },
     { key = '+', mods = 'CTRL', action = act.IncreaseFontSize },
     { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
     { key = '0', mods = 'CTRL', action = act.ResetFontSize },
     { key = 'R', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
     { key = 'p', mods = 'LEADER', action = act.PasteFrom 'Clipboard' },
+    { key = 'v', mods = mod, action = act.PasteFrom 'Clipboard'},
+    -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
+    {
+      key = 'LeftArrow',
+      mods = 'OPT|CMD',
+      action = act.ActivateTabRelative(-1)
+    },
+    {
+      key = 'RightArrow',
+      mods = 'OPT|CMD',
+      action = act.ActivateTabRelative(1)
+    },
 }
 
 for i = 1, 8 do
   -- CTRL+ALT + number to activate that tab
   table.insert(keys, {
     key = tostring(i),
-    mods = 'CMD',
+    mods = mod,
     action = act.ActivateTab(i - 1),
   })
   -- F1 through F8 to activate that tab
