@@ -10,6 +10,13 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- Detect platform and set platform speific settings
+local mod = 'CMD'
+if wezterm.target_triple:find("windows") then
+  mod = 'CTRL'
+  config.default_prog = { 'pwsh.exe' }
+end
+
 bar.apply_to_config(config, {
   position = "bottom",
   max_width = 32,
@@ -191,11 +198,6 @@ config.scrollback_lines = 5000
 
 config.disable_default_key_bindings = true
 
--- Detect platform and set modifier key
-local mod = 'CMD'
-if wezterm.target_triple:find("windows") then
-  mod = 'CTRL'
-end
 
 config.leader = { key = 'b', mods = mod, timeout_milliseconds = 2000 }
 local keys = {
@@ -217,7 +219,7 @@ local keys = {
     { key = 'R', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
     { key = 'p', mods = 'LEADER', action = act.PasteFrom 'Clipboard' },
     { key = 'v', mods = mod, action = act.PasteFrom 'Clipboard'},
-    -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
+    -- switch to next/previous tab
     {
       key = 'LeftArrow',
       mods = 'OPT|CMD',
@@ -228,10 +230,12 @@ local keys = {
       mods = 'OPT|CMD',
       action = act.ActivateTabRelative(1)
     },
+    { key = '{', mods = mod, action = act.MoveTabRelative(-1) },
+    { key = '}', mods = mod, action = act.MoveTabRelative(1) },
 }
 
 for i = 1, 8 do
-  -- CTRL+ALT + number to activate that tab
+  -- MOD + number to activate that tab
   table.insert(keys, {
     key = tostring(i),
     mods = mod,
