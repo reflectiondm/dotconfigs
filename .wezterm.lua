@@ -230,8 +230,11 @@ local keys = {
       mods = 'OPT|CMD',
       action = act.ActivateTabRelative(1)
     },
+    -- move tab right/left
     { key = '{', mods = mod, action = act.MoveTabRelative(-1) },
     { key = '}', mods = mod, action = act.MoveTabRelative(1) },
+
+    { key = 'o', mods = 'LEADER', action = wezterm.action.QuickSelect },
 }
 
 for i = 1, 8 do
