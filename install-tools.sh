@@ -3,8 +3,6 @@
 
 # Homebrew apps
 
-# zsh theme
-brew install powerlevel10k
 # zsh syntax highlighting
 brew install zsh-syntax-highlighting
 # source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -22,6 +20,7 @@ brew install mise
 
 #terminal
 brew install --cask wezterm
+brew install jandedobbeleer/oh-my-posh/oh-my-posh
 
 # llm
 brew install llm
