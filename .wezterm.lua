@@ -235,6 +235,21 @@ local keys = {
     { key = '}', mods = mod, action = act.MoveTabRelative(1) },
 
     { key = 'o', mods = 'LEADER', action = wezterm.action.QuickSelect },
+    -- Keyboard text navigation
+    -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
+    {
+      key = 'LeftArrow',
+      mods = 'OPT',
+      action = act.SendKey {
+        key = 'b',
+        mods = 'ALT',
+      },
+    },
+    {
+      key = 'RightArrow',
+      mods = 'OPT',
+      action = act.SendKey { key = 'f', mods = 'ALT' },
+    },
 }
 
 for i = 1, 8 do
@@ -291,6 +306,5 @@ wezterm.on(
     return string.rep(' ', pad_length) .. full_title .. string.rep(' ', pad_length)
   end
 )
-
 
 return config
