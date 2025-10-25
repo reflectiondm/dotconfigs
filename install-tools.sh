@@ -7,6 +7,12 @@
 brew install zsh-syntax-highlighting
 # source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# fonts
+brew install --cask font-fira-code-nerd-font
+
+# wm
+brew install --cask nikitabobko/tap/aerospace
+
 # tools
 brew install zoxide
 brew install lazygit

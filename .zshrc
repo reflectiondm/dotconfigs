@@ -32,3 +32,9 @@ tld() {
   tldr -m $1 $2 $3 $4 | glow -
 }
 export MANPAGER="sh -c 'col -bx | bat -l man -p --theme TwoDark'"
+
+# Tools activation
+# enable oh-my-posh
+# eval "$(oh-my-posh init zsh --config ~/theme.omp.json)"
+# eval "$(mise activate zsh)"
+# eval "$(zoxide init zsh) 
